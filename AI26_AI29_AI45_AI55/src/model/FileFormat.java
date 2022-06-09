@@ -1,5 +1,10 @@
 package model;
 
-public class FileFormat {
+public enum FileFormat {
+	
+	PDF,
+	GIF,
+	JPEG,
+	PNG
 
 }
