@@ -1,5 +1,8 @@
 package model;
 
-public class WorkPlace {
-
+public enum WorkPlace {
+	MODELATER,
+	RIGGER,
+	ANIMATOR,
+	ILLUSTRATOR
 }
