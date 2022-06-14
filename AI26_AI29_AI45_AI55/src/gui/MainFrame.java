@@ -21,20 +21,25 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import data.EmployeeData;
 
 public class MainFrame extends JFrame{
 	
 	private static MainFrame instance = null;
 	
-	private JToolBar mainToolBar;
+	private JToolBar mainToolbar;
 	private JButton addButton;
 	private JButton editButton;
 	private JButton deleteButton;
 	private JMenuBar menuBar;
 	private JTabbedPane tabHolder;
+	private EmployeeData employeeData;
+	
 	
 	private MainFrame() {
+		this.employeeData = new EmployeeData();
 		this.createMenubar();
+		this.createToolbar();
 		this.initPosition();
 	}
 	
@@ -54,6 +59,55 @@ public class MainFrame extends JFrame{
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
+	}
+	
+	private void createToolbar() {
+
+		this.mainToolbar = new JToolBar(JToolBar.HORIZONTAL);
+		this.mainToolbar.setFloatable(false);
+
+		ImageIcon plusIcon = createImageIcon("images/plus.png", true, 20, 20);
+		addButton = new JButton();
+		addButton.setIcon(plusIcon);
+		addButton.setToolTipText("Add");
+		addButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Add");
+			}
+		});
+		
+		
+		ImageIcon editIcon = createImageIcon("images/edit2.png", true, 20, 20);
+		editButton = new JButton();
+		editButton.setIcon(editIcon);
+		editButton.setToolTipText("Edit");
+		editButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Edit");
+			}
+		});
+		
+		ImageIcon deleteIcon = createImageIcon("images/trash.png", true, 20, 20);
+		deleteButton = new JButton();
+		deleteButton.setIcon(deleteIcon);
+		deleteButton.setToolTipText("Delete");
+		deleteButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Delete");
+			}
+		});
+		
+		this.mainToolbar.add(addButton);
+		this.mainToolbar.add(editButton);
+		this.mainToolbar.add(deleteButton);
+		this.add(this.mainToolbar, BorderLayout.NORTH);
+
 	}
 	
 	private void createMenubar() {
