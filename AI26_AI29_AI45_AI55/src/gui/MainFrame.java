@@ -36,10 +36,12 @@ public class MainFrame extends JFrame{
 	private EmployeeData employeeData;
 	
 	
+	
 	private MainFrame() {
 		this.employeeData = new EmployeeData();
 		this.createMenubar();
 		this.createToolbar();
+		this.createStatusBar();
 		this.initPosition();
 	}
 	
@@ -159,6 +161,20 @@ public class MainFrame extends JFrame{
 		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke('N', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
 		setJMenuBar(this.menuBar);
 		
+	}
+	
+	private void createStatusBar() {
+
+		JPanel statusPanel = new JPanel();
+		this.add(statusPanel, BorderLayout.SOUTH);
+		statusPanel.setPreferredSize(new Dimension(this.getWidth(), 25));
+		statusPanel.setLayout(new BorderLayout());
+		
+		LocalDate date = LocalDate.now();
+		JLabel statusLabel = new JLabel("Date:  " + date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString()+"  ",SwingConstants.LEFT);
+		statusLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		statusPanel.add(statusLabel,BorderLayout.EAST);
 	}
 	
 	protected static ImageIcon createImageIcon(String path, boolean scaleImage, int width, int height) {
