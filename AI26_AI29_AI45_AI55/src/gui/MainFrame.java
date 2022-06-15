@@ -42,6 +42,7 @@ public class MainFrame extends JFrame{
 		this.createMenubar();
 		this.createToolbar();
 		this.createStatusBar();
+		this.createCentralPanel();
 		this.initPosition();
 	}
 	
@@ -176,6 +177,21 @@ public class MainFrame extends JFrame{
 		
 		statusPanel.add(statusLabel,BorderLayout.EAST);
 	}
+	
+	
+	private void createCentralPanel() {
+		this.tabHolder = new JTabbedPane();
+		
+		EmployeeTab employeeTab = new EmployeeTab(this.employeeData);
+		this.tabHolder.add("Employees",employeeTab);
+
+		SoftwareTab softwareTab1 = new SoftwareTab();		
+		this.tabHolder.add("Software",softwareTab1);
+		
+		this.add(this.tabHolder, BorderLayout.CENTER);
+		
+	}
+	
 	
 	protected static ImageIcon createImageIcon(String path, boolean scaleImage, int width, int height) {
 		if (scaleImage) {
