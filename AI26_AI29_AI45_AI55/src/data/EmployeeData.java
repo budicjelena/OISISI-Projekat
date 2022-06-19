@@ -13,7 +13,7 @@ import model.WorkPlace;
 public class EmployeeData {
 	
 	
-	private List<Employee> employees = new ArrayList<>(); 
+	private ArrayList<Employee> employees = new ArrayList<>(); 
 	
 	//initial data
 	
@@ -54,12 +54,17 @@ public class EmployeeData {
 		employees.add(e3);
 	}
 
-	public List<Employee> getEmployees() {
+	public ArrayList<Employee> getEmployees() {
 		return employees;
 	}
 
-	public void setEmployees(List<Employee> employees) {
+	public void setEmployees(ArrayList<Employee> employees) {
 		this.employees = employees;
+	}
+
+	public void removeEmployeeFromList(int index) {
+		// TODO Auto-generated method stub
+		this.employees.remove(index);
 	}
 	
 

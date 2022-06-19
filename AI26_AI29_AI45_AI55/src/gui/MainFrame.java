@@ -21,7 +21,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+
 import data.EmployeeData;
+import data.SoftwareData;
 
 public class MainFrame extends JFrame{
 	
@@ -33,12 +35,15 @@ public class MainFrame extends JFrame{
 	private JButton deleteButton;
 	private JMenuBar menuBar;
 	private JTabbedPane tabHolder;
+	
 	private EmployeeData employeeData;
+	private SoftwareData softwareData;
 	
 	
 	
 	private MainFrame() {
 		this.employeeData = new EmployeeData();
+		this.softwareData = new SoftwareData();
 		this.createMenubar();
 		this.createToolbar();
 		this.createStatusBar();
