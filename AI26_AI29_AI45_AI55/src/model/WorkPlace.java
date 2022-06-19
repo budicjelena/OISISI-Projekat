@@ -1,7 +1,7 @@
 package model;
 
 public enum WorkPlace {
-	MODELATER,
+	MODELAR,
 	RIGGER,
 	ANIMATOR,
 	ILLUSTRATOR

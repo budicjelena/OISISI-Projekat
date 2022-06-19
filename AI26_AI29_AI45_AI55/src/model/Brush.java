@@ -40,5 +40,22 @@ public class Brush {
     public void setColor(Color color) {
 		this.color = color;
 	}
+    
+    public static java.awt.Color convertColor (Color color){
+    	
+    	switch(color) {
+    	case RED: return java.awt.Color.RED;
+    	case GREEN: return java.awt.Color.GREEN;
+    	case BLUE: return java.awt.Color.BLUE;
+    	case YELLOW: return java.awt.Color.YELLOW;
+    	default: return java.awt.Color.WHITE;
+    	}
+    	
+    }
+    
+    @Override
+    public String toString() {
+    	return "Brush [name = " + name + "]";
+    }
 
 }

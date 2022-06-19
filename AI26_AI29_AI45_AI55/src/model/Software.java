@@ -5,23 +5,23 @@ import java.util.ArrayList;
 public class Software {
 	
 	private String name;
-	private ArrayList<Brush> brushes =  new ArrayList<>();
+	
 	private FileFormat fileFormat;
 	private Render render;
-	private ArrayList<String> animationTools =  new ArrayList<>(); // maybe change String to Object (make AnimationTool class)
+	private ArrayList<Brush> brushes =  new ArrayList<>();
 	
 	public Software() {
 		
 	}
 
-	public Software(String name, ArrayList<Brush> brushes, FileFormat fileFormat, Render render,
-			ArrayList<String> animationTools) {
+	public Software(String name, ArrayList<Brush> brushes, FileFormat fileFormat, Render render) {
+		
 		super();
 		this.name = name;
 		this.brushes = brushes;
 		this.fileFormat = fileFormat;
 		this.render = render;
-		this.animationTools = animationTools;
+		
 	}
 
 	public String getName() {
@@ -56,12 +56,10 @@ public class Software {
 		this.render = render;
 	}
 
-	public ArrayList<String> getAnimationTools() {
-		return animationTools;
-	}
-
-	public void setAnimationTools(ArrayList<String> animationTools) {
-		this.animationTools = animationTools;
+	@Override
+	
+	public String toString() {
+		return "Software [name = " + name +"]";
 	}
 	
 	

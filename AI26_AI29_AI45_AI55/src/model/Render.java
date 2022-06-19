@@ -5,15 +5,15 @@ import java.util.ArrayList;
 public class Render {
 	
 	private String name;
-	private ArrayList<String> materials = new ArrayList<>();
-	private ArrayList<String> cameras = new ArrayList<>();
-	private ArrayList<String> objects = new ArrayList<>();
+	private ArrayList<Material> materials = new ArrayList<>();
+	private ArrayList<Camera> cameras = new ArrayList<>();
+	private ArrayList<Object> objects = new ArrayList<>();
 	
 	public Render() {
 		
 	}
 	
-	public Render(String name, ArrayList<String> materials, ArrayList<String> cameras, ArrayList<String> objects) {
+	public Render(String name, ArrayList<Material> materials, ArrayList<Camera> cameras, ArrayList<Object> objects) {
 		super();
 		this.name = name;
 		this.materials = materials;
@@ -27,22 +27,22 @@ public class Render {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public ArrayList<String> getMaterials(){
+	public ArrayList<Material> getMaterials(){
 		return materials;
 	}
-	public void setMaterials(ArrayList<String> materials) {
+	public void setMaterials(ArrayList<Material> materials) {
 		this.materials = materials;
 	}
-	public ArrayList<String> getCameras(){
+	public ArrayList<Camera> getCameras(){
 		return cameras;
 	}
-	public void setCameras(ArrayList<String> cameras) {
+	public void setCameras(ArrayList<Camera> cameras) {
 		this.cameras = cameras;
 	}
-	public ArrayList<String> getObjects(){
+	public ArrayList<Object> getObjects(){
 		return objects;
 	}
-	public void setObjects(ArrayList<String> objects) {
+	public void setObjects(ArrayList<Object> objects) {
 		this.objects = objects;
 	}
 
