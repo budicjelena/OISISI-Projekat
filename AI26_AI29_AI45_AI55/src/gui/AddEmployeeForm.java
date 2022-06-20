@@ -26,6 +26,9 @@ public class AddEmployeeForm extends JFrame implements ActionListener {
 	private ArrayList<Software> softwares;
 	private DefaultTableModel employeTable;
 	private ArrayList<Employee> employees;
+	
+	private Employee employeeToEdit;
+	int employeeIndex;
 
 	private String dates[] = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15",
 			"16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" };
@@ -36,11 +39,15 @@ public class AddEmployeeForm extends JFrame implements ActionListener {
 			"2018", "2019", "2020", "2021", "2022" };
 	
 	
-	public AddEmployeeForm(ArrayList<Software> softwares, DefaultTableModel employeTable, ArrayList<Employee> employees) {
+	public AddEmployeeForm(ArrayList<Software> softwares, DefaultTableModel employeTable, ArrayList<Employee> employees,
+			Employee employeeToEdit, int employeeIndex) {
 		
 		this.softwares = softwares; 
 		this.employeTable = employeTable; 
 		this.employees = employees;
+		
+		this.employeeToEdit = employeeToEdit; 
+		this.employeeIndex = employeeIndex;
 		
 		setTitle("Add Employee");
 		setBounds(300, 90, 600, 850);
@@ -165,6 +172,11 @@ public class AddEmployeeForm extends JFrame implements ActionListener {
 		
 		String addButtonText = "Create Employee";
 		
+		if (this.employeeToEdit != null) {
+			addButtonText = "Edit employee";
+		}
+		
+		
 		create = new JButton(addButtonText);
 		create.setSize(200, 20);
 		create.setLocation(175, 700);
@@ -177,8 +189,34 @@ public class AddEmployeeForm extends JFrame implements ActionListener {
 		cancel.addActionListener(this);
 		c.add(cancel);
 		
+		if (this.employeeToEdit != null) {
+			fillFieldsWithEmployeeData(this.employeeToEdit);
+		}
+		
+		
 		setVisible(true);
 		
+	}
+	
+	private void fillFieldsWithEmployeeData(Employee employee) {
+		this.tcity.setText(employee.getAdress().getCity());
+		this.tstreet.setText(employee.getAdress().getStreet());
+		this.tnumber.setText(employee.getAdress().getNumber());
+		this.tfirstName.setText(employee.getFirstName());
+		this.tlastName.setText(employee.getLastName());
+		this.tjmbg.setText(String.valueOf(employee.getJmbg()));
+		this.workPlace.setSelectedItem(employee.getWorkplace());
+		this.temail.setText(employee.getEmail());
+		
+		int [] selectedSoftwareIndices = new int[employee.getSoftwares().size()];
+		for (int i=0; i< employee.getSoftwares().size(); i++) {
+			for (int j = 0; j < softwares.size(); j++) {
+				if(softwares.get(j)==employee.getSoftwares().get(i)) {
+					selectedSoftwareIndices[i] = j;
+				}
+			}
+		}
+		this.softwareList.setSelectedIndices(selectedSoftwareIndices);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -206,7 +244,11 @@ public class AddEmployeeForm extends JFrame implements ActionListener {
 		
 		Employee employee;
 		
-		employee = new Employee();
+		if (this.employeeToEdit != null) {
+			employee = this.employeeToEdit;
+		} else {
+			employee = new Employee();
+		}
 		
 		Adress adress = new Adress();
 
@@ -234,9 +276,24 @@ public class AddEmployeeForm extends JFrame implements ActionListener {
 			softwares.add(this.softwares.get(i));
 		}
 		employee.setSoftwares(softwares);
-		this.employeTable.addRow(new Object[] { employee.getFirstName(), employee.getLastName(),
-				employee.getEmail(), employee.getWorkplace() });
-		this.employees.add(employee);
+		
+		if (this.employeeToEdit == null) {
+			
+			this.employeTable.addRow(new Object[] { employee.getFirstName(), employee.getLastName(),
+					employee.getEmail(), employee.getWorkplace() });
+			
+			this.employees.add(employee);
+		} else {
+			
+			this.employeTable.removeRow(this.employeeIndex);
+			
+			this.employeTable.addRow(new Object[] { employee.getFirstName(), employee.getLastName(),
+					employee.getEmail(), employee.getWorkplace() });
+			
+			this.employees.remove(this.employeeIndex);
+			
+			this.employees.add(employee);
+		}
 		
 	}
 	
