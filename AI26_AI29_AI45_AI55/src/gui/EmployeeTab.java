@@ -2,26 +2,21 @@ package gui;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.ScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import data.EmployeeData;
@@ -35,7 +30,6 @@ public class EmployeeTab extends JSplitPane {
 	private DefaultTableModel tableModel;
 	private JPanel tablePanel;
 	private JPanel infoPanel;
-	private Container c;
 	
 	public EmployeeTab(EmployeeData employeeData) {
 		this.employeeData = employeeData;
@@ -51,13 +45,12 @@ public class EmployeeTab extends JSplitPane {
 		fillEmployeeTable();
 	}
 	
-	private void fillEmployeeTable() {
+	public void fillEmployeeTable() {
 		String[] header = new String[] { "First Name", "Last Name", "EMAIL", "Position" };
 		Object[][] employees = new Object[this.employeeData.getEmployees().size()][header.length];
 
 		for (int i = 0; i < this.employeeData.getEmployees().size(); i++) {
 
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
 			Employee employee = this.employeeData.getEmployees().get(i);
 			employees[i][0] = employee.getFirstName();
 			employees[i][1] = employee.getLastName();
@@ -94,7 +87,6 @@ public class EmployeeTab extends JSplitPane {
 
 		JLabel firstName, lastName, email, adress, workplace, jmbg, dateOfBirth;
 		JTextField tfirstName, tlastName, temail, tadress, tworkplace, tjmbg, tdateOfBirth;
-		JTable softwareTable;
 
 		firstName = new JLabel("FIRST NAME");
 		tfirstName = new JTextField(20);
@@ -181,9 +173,35 @@ public class EmployeeTab extends JSplitPane {
 
 	}
 	
+	public void deleteEmployee() {
+		if (jTable.getSelectedRow() >= 0) { // Checking if row is selected
+			int choice = JOptionPane.showConfirmDialog(null, "Do you want to proceed?", "Warning.",
+					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);// 0 =yes , 1 =no
+
+			if (choice == 0) {
+				this.employeeData.removeEmployeeFromList(jTable.getSelectedRow()); // pass selected row index that
+																					// corresponds to index of list
+				tableModel.removeRow(jTable.getSelectedRow());// remove row from table
+				this.infoPanel.removeAll(); // remove info panel of deleted software
+				this.repaint(); // need this to make visual change
+			}
+		} else {
+			// show error message if no row is selected
+			JOptionPane.showMessageDialog(null, "You need to select row!", "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	public DefaultTableModel getTableModel() {
+		return this.tableModel;
+	}
 	
+	public int getSelectedEmployeeIndex() {
+		return this.jTable.getSelectedRow();
+	}
 	
-	
+	public JTable getTable() {
+		return this.jTable;
+	}
 	
 
 }
