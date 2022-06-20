@@ -16,13 +16,16 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 
+import data.BrushData;
 import data.EmployeeData;
+import data.RenderData;
 import data.SoftwareData;
 
 public class MainFrame extends JFrame{
@@ -38,13 +41,20 @@ public class MainFrame extends JFrame{
 	
 	private EmployeeData employeeData;
 	private SoftwareData softwareData;
-	
+	private BrushData brushData;
+	private RenderData renderData;
 	
 	private SoftwareTab softwareTab;
+	private EmployeeTab employeeTab;
+	private BrushTab brushTab;
+	private RenderTab renderTab;
 	
 	private MainFrame() {
-		this.employeeData = new EmployeeData();
-		this.softwareData = new SoftwareData();
+		this.brushData = new BrushData();
+		this.renderData = new RenderData();
+		this.softwareData = new SoftwareData(this.renderData.getRenders(), this.brushData.getBrushes());
+		this.employeeData = new EmployeeData(this.softwareData.getSoftwares());
+		
 		this.createMenubar();
 		this.createToolbar();
 		this.createStatusBar();
@@ -144,12 +154,62 @@ public class MainFrame extends JFrame{
 		file.add(open);
 		JMenuItem subMenuItemEmployees = new JMenuItem("Employees", openIcon);
 		JMenuItem subMenuItemSoftware = new JMenuItem("Software", openIcon);
+		JMenuItem subMenuItemBrushes = new JMenuItem("Brushes", openIcon);
+		JMenuItem subMenuItemRender = new JMenuItem("Render", openIcon);
 		open.add(subMenuItemEmployees);
 		open.add(subMenuItemSoftware);
+		open.add(subMenuItemBrushes);
+		open.add(subMenuItemRender);
+		
+		subMenuItemEmployees.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tabHolder.setSelectedIndex(0);
+
+			}
+		});
+
+		subMenuItemSoftware.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tabHolder.setSelectedIndex(1);
+
+			}
+		});
+
+		subMenuItemBrushes.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tabHolder.setSelectedIndex(2);
+
+			}
+		});
+
+		subMenuItemRender.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tabHolder.setSelectedIndex(3);
+
+			}
+		});
+		
 		
 		ImageIcon crossIcon = createImageIcon("images/cross.png", true, 20,20);
 		JMenuItem menuItemExit = new JMenuItem("Exit", crossIcon);
 		file.add(menuItemExit);
+		
+		menuItemExit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+			}
+		});
 		
 		//add items in Edit menu
 		ImageIcon editIcon = createImageIcon("images/edit2.png", true, 20,20);
@@ -164,6 +224,16 @@ public class MainFrame extends JFrame{
 		ImageIcon aboutIcon = createImageIcon("images/about.png", true, 20,20);
 		JMenuItem menuItemAbout = new JMenuItem("About", aboutIcon);
 		help.add(menuItemAbout);
+		
+		menuItemAbout.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JOptionPane.showMessageDialog(null, "OISISI Project aplication :)", "About",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
 		
 		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke('N', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
 		setJMenuBar(this.menuBar);
@@ -187,13 +257,19 @@ public class MainFrame extends JFrame{
 	
 	private void createCentralPanel() {
 		this.tabHolder = new JTabbedPane();
-		
-		EmployeeTab employeeTab = new EmployeeTab(this.employeeData);
-		this.tabHolder.add("Employees",employeeTab);
+
+		this.employeeTab = new EmployeeTab(this.employeeData);
+		this.tabHolder.add("Employees", employeeTab);
 
 		this.softwareTab = new SoftwareTab(this.softwareData);
 		this.tabHolder.add("Software", softwareTab);
-		
+
+		this.brushTab = new BrushTab(this.brushData);
+		this.tabHolder.add("Brushes", brushTab);
+
+		this.renderTab = new RenderTab(this.renderData);
+		this.tabHolder.add("Renders", renderTab);
+
 		this.add(this.tabHolder, BorderLayout.CENTER);
 		
 	}
