@@ -40,6 +40,7 @@ public class MainFrame extends JFrame{
 	private SoftwareData softwareData;
 	
 	
+	private SoftwareTab softwareTab;
 	
 	private MainFrame() {
 		this.employeeData = new EmployeeData();
@@ -190,8 +191,8 @@ public class MainFrame extends JFrame{
 		EmployeeTab employeeTab = new EmployeeTab(this.employeeData);
 		this.tabHolder.add("Employees",employeeTab);
 
-		SoftwareTab softwareTab1 = new SoftwareTab();		
-		this.tabHolder.add("Software",softwareTab1);
+		this.softwareTab = new SoftwareTab(this.softwareData);
+		this.tabHolder.add("Software", softwareTab);
 		
 		this.add(this.tabHolder, BorderLayout.CENTER);
 		
