@@ -3,7 +3,6 @@ package data;
 import java.util.ArrayList;
 
 import model.Brush;
-import model.Color;
 import model.FileFormat;
 import model.Render;
 import model.Software;
@@ -33,12 +32,9 @@ public class SoftwareData {
 		brushes2.add(b2);
 		brushes2.add(b3);
 
-		ArrayList<String> animationTools1 = new ArrayList<>();
-		ArrayList<String> animationTools2 = new ArrayList<>();
-
 		Software s1 = new Software("3DMAX", brushes1, FileFormat.PDF, r1);
 		Software s2 = new Software("PHOTOSHOP", brushes2, FileFormat.JPEG, r2);
-		Software s3 = new Software("TEST", brushes2, FileFormat.JPEG, r2);
+		Software s3 = new Software("TEST", brushes2, FileFormat.JPEG, r3);
 
 		softwares.add(s1);
 		softwares.add(s2);

@@ -3,7 +3,6 @@ package data;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 import model.Adress;
 import model.Employee;
@@ -44,10 +43,10 @@ public class EmployeeData {
 		Employee e1 = new Employee("a", "a", 1,
 				LocalDate.parse("02-08-2000", DateTimeFormatter.ofPattern("dd-MM-yyyy")), "a", a1, WorkPlace.ANIMATOR,
 				softwares1);
-		Employee e2 = new Employee("b", "b", 1,
+		Employee e2 = new Employee("b", "b", 2,
 				LocalDate.parse("11-11-1998", DateTimeFormatter.ofPattern("dd-MM-yyyy")), "b", a2,
 				WorkPlace.ILLUSTRATOR, softwares2);
-		Employee e3 = new Employee("c", "c", 1,
+		Employee e3 = new Employee("c", "c", 3,
 				LocalDate.parse("12-03-1999", DateTimeFormatter.ofPattern("dd-MM-yyyy")), "c", a3, WorkPlace.RIGGER,
 				softwares3);
 
@@ -69,4 +68,11 @@ public class EmployeeData {
 		this.employees.remove(index);
 	}
 
+	public void removeSoftwareFromEmployees(Software software) {
+		for (Employee employee : employees) {
+			if(employee.getSoftwares().contains(software)) {
+				employee.getSoftwares().remove(software);
+			}
+		}
+	}
 }

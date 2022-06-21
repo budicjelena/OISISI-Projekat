@@ -2,18 +2,18 @@ package data;
 
 import java.util.ArrayList;
 
+import model.Render;
 import model.Camera;
 import model.Material;
-import model.Render;
 
 public class RenderData {
 
 	private ArrayList<Render> renders = new ArrayList<>();
-	
+
 	public RenderData() {
 		loadDummyData();
 	}
-	
+
 	private void loadDummyData() {
 		ArrayList<Material> m1 = new ArrayList<>();
 		ArrayList<Material> m2 = new ArrayList<>();
@@ -26,8 +26,8 @@ public class RenderData {
 		ArrayList<model.Object> o2 = new ArrayList<>();
 		o1.add(model.Object.OBJ_1);
 		o1.add(model.Object.OBJ_2);
-		o1.add(model.Object.OBJ_3);
-		
+		o2.add(model.Object.OBJ_3);
+
 		ArrayList<Camera> c1 = new ArrayList<>();
 		ArrayList<Camera> c2 = new ArrayList<>();
 		
@@ -46,17 +46,17 @@ public class RenderData {
 		renders.add(r2);
 		renders.add(r3);
 	}
-	
+
 	public ArrayList<Render> getRenders() {
 		return renders;
 	}
-	
+
 	public void setRenders(ArrayList<Render> renders) {
 		this.renders = renders;
 	}
 	
-	public void removeRenderFromList(int index) {
-		//TODO Auto-generated method stub
+	public void removeRenderFromList(int  index) {
+		// TODO Auto-generated method stub
 		this.renders.remove(index);
 	}
 }

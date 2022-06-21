@@ -3,6 +3,8 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import model.WorkPlace;
+
 public class Employee {
 
 	private String firstName;
