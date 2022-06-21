@@ -2,6 +2,10 @@ package model;
 
 import java.util.ArrayList;
 
+import model.Camera;
+import model.Material;
+import model.Object;
+
 public class Render {
 	
 	private String name;

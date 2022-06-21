@@ -4,8 +4,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,10 +16,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import data.BrushData;
-import data.EmployeeData;
 import model.Brush;
-import model.Employee;
-import model.Software;
+
 
 public class BrushTab extends JSplitPane {
 	
@@ -42,10 +38,10 @@ public class BrushTab extends JSplitPane {
 		this.setOneTouchExpandable(false);
 		this.setResizeWeight(0.25);
 		
-		fillEmployeeTable();
+		fillBrushTable();
 	}
 	
-	public void fillEmployeeTable() {
+	public void fillBrushTable() {
 		String[] header = new String[] {"Name", "Purpose"};
 		Object[][] brushes = new Object[this.brushData.getBrushes().size()][header.length];
 		
@@ -72,7 +68,6 @@ public class BrushTab extends JSplitPane {
 				if (e.getClickCount() == 1) {
 					JTable target = (JTable) e.getSource();
 					int row = target.getSelectedRow();
-					int column = target.getSelectedColumn();
 					infoPanel.removeAll();
 					fillInfoPanel(brushData.getBrushes().get(row));
 				}
@@ -124,7 +119,7 @@ public class BrushTab extends JSplitPane {
 			
 			if(choice == 0) {
 				this.brushData.removeBrushFromList(jTable.getSelectedRow()); //pass selected row index that
-				
+																				//corresponds to index of list
 				tableModel.removeRow(jTable.getSelectedRow()); //remove row from table
 				this.infoPanel.removeAll(); //remove info panel of deleted software
 				this.repaint();//need this to make visual change
@@ -140,7 +135,7 @@ public class BrushTab extends JSplitPane {
 		return this.tableModel;
 	}
 	
-	public int getSelectedEmployeeIndex() {
+	public int getSelectedBrushIndex() {
 		return this.jTable.getSelectedRow();
 	}
 
