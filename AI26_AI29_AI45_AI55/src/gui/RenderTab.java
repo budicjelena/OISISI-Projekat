@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -18,15 +17,11 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-import data.BrushData;
-import data.EmployeeData;
+
 import data.RenderData;
-import model.Brush;
 import model.Camera;
-import model.Employee;
 import model.Material;
 import model.Render;
-import model.Software;
 
 public class RenderTab extends JSplitPane {
 
@@ -47,10 +42,10 @@ public class RenderTab extends JSplitPane {
 		this.setOneTouchExpandable(false);
 		this.setResizeWeight(0.25);// play with values to adjust split rate of left and right pannel
 
-		fillEmployeeTable();
+		fillRenderTable();
 	}
 
-	public void fillEmployeeTable() {
+	public void fillRenderTable() {
 		String[] header = new String[] { "Name" };
 		Object[][] renders = new Object[this.renderData.getRenders().size()][header.length];
 
@@ -205,7 +200,7 @@ public class RenderTab extends JSplitPane {
 		return this.tableModel;
 	}
 
-	public int getSelectedEmployeeIndex() {
+	public int getSelectedRenderIndex() {
 		return this.jTable.getSelectedRow();
 	}
 
