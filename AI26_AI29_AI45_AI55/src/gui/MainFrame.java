@@ -117,7 +117,30 @@ public class MainFrame extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Edit");
+				
+				if (tabHolder.getSelectedIndex() == 1) {
+					if (softwareTab.getSelectedSoftwareIndex() >= 0) {
+						AddOrEditSoftwareForm addOrEditSoftwareForm = new AddOrEditSoftwareForm(
+								softwareData.getSoftwares(), softwareTab.getTableModel(), brushData.getBrushes(),
+								renderData.getRenders(),
+								softwareData.getSoftwares().get(softwareTab.getSelectedSoftwareIndex()),
+								softwareTab.getSelectedSoftwareIndex());
+					} else {
+						JOptionPane.showMessageDialog(null, "You need to select row!", "ERROR",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				} else if (tabHolder.getSelectedIndex() == 0) {
+					if (employeeTab.getSelectedEmployeeIndex() >= 0) {
+						AddEmployeeForm addEmployeeForm = new AddEmployeeForm(softwareData.getSoftwares(),
+								employeeTab.getTableModel(), employeeData.getEmployees(),
+								employeeData.getEmployees().get(employeeTab.getSelectedEmployeeIndex()),
+								employeeTab.getSelectedEmployeeIndex());
+						addEmployeeForm.setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(null, "You need to select row!", "ERROR",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
 			}
 		});
 		
@@ -129,7 +152,15 @@ public class MainFrame extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Delete");
+				if (tabHolder.getSelectedIndex() == 1) {
+					softwareTab.deleteSoftware();
+				} else if (tabHolder.getSelectedIndex() == 0) {
+					employeeTab.deleteEmployee();
+				} else if (tabHolder.getSelectedIndex() == 2) {
+					brushTab.deleteBrush();
+				} else if (tabHolder.getSelectedIndex() == 3) {
+					renderTab.deleteRender();
+				}
 			}
 		});
 		
@@ -158,6 +189,23 @@ public class MainFrame extends JFrame{
 		ImageIcon plusIcon = createImageIcon("images/plus.png", true, 20,20);
 		JMenuItem menuItemNew = new JMenuItem("New", plusIcon);
 		file.add(menuItemNew);
+		
+		menuItemNew.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (tabHolder.getSelectedIndex() == 1) {
+					AddOrEditSoftwareForm addOrEditSoftwareForm = new AddOrEditSoftwareForm(softwareData.getSoftwares(),
+							softwareTab.getTableModel(), brushData.getBrushes(), renderData.getRenders(), null, 0);
+				} else if (tabHolder.getSelectedIndex() == 0) {
+					AddEmployeeForm addEmployeeForm = new AddEmployeeForm(softwareData.getSoftwares(),
+							employeeTab.getTableModel(), employeeData.getEmployees(), null, 0);
+					addEmployeeForm.setVisible(true);
+				}
+			}
+		});
+		
+		
+		
 		
 		//create submenu for open
 		ImageIcon openIcon = createImageIcon("images/open.png", true, 20,20);
@@ -227,10 +275,54 @@ public class MainFrame extends JFrame{
 		JMenuItem menuItemEdit = new JMenuItem("Edit", editIcon);
 		edit.add(menuItemEdit);
 		
+		menuItemEdit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (tabHolder.getSelectedIndex() == 1) {
+					if (softwareTab.getSelectedSoftwareIndex() >= 0) {
+						AddOrEditSoftwareForm addOrEditSoftwareForm = new AddOrEditSoftwareForm(
+								softwareData.getSoftwares(), softwareTab.getTableModel(), brushData.getBrushes(),
+								renderData.getRenders(),
+								softwareData.getSoftwares().get(softwareTab.getSelectedSoftwareIndex()),
+								softwareTab.getSelectedSoftwareIndex());
+					} else {
+						JOptionPane.showMessageDialog(null, "You need to select row!", "ERROR",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				} else if (tabHolder.getSelectedIndex() == 0) {
+					if (employeeTab.getSelectedEmployeeIndex() >= 0) {
+						AddEmployeeForm addEmployeeForm = new AddEmployeeForm(softwareData.getSoftwares(),
+								employeeTab.getTableModel(), employeeData.getEmployees(),
+								employeeData.getEmployees().get(employeeTab.getSelectedEmployeeIndex()),
+								employeeTab.getSelectedEmployeeIndex());
+						addEmployeeForm.setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(null, "You need to select row!", "ERROR",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
+		
 		ImageIcon deleteIcon = createImageIcon("images/delete.png", true, 20,20);
 		JMenuItem menuItemDelete = new JMenuItem("Delete", deleteIcon);
 		edit.add(menuItemDelete);
 		
+		menuItemDelete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (tabHolder.getSelectedIndex() == 1) {
+					softwareTab.deleteSoftware();
+				} else if (tabHolder.getSelectedIndex() == 0) {
+					employeeTab.deleteEmployee();
+				} else if (tabHolder.getSelectedIndex() == 2) {
+					brushTab.deleteBrush();
+				} else if (tabHolder.getSelectedIndex() == 3) {
+					renderTab.deleteRender();
+				}
+			}
+		});
+	
 		//add items in Help menu
 		ImageIcon aboutIcon = createImageIcon("images/about.png", true, 20,20);
 		JMenuItem menuItemAbout = new JMenuItem("About", aboutIcon);
@@ -246,7 +338,16 @@ public class MainFrame extends JFrame{
 			}
 		});
 		
-		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke('N', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke('O', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+		menuItemEdit.setAccelerator(KeyStroke.getKeyStroke('E', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+		menuItemDelete.setAccelerator(KeyStroke.getKeyStroke('D', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+		menuItemExit.setAccelerator(KeyStroke.getKeyStroke('W', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+		menuItemNew.setAccelerator(KeyStroke.getKeyStroke('N', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+		subMenuItemEmployees.setAccelerator(KeyStroke.getKeyStroke('1', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+		subMenuItemSoftware.setAccelerator(KeyStroke.getKeyStroke('2', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+		subMenuItemBrushes.setAccelerator(KeyStroke.getKeyStroke('3', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+		subMenuItemRender.setAccelerator(KeyStroke.getKeyStroke('4', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+		
 		setJMenuBar(this.menuBar);
 		
 	}
