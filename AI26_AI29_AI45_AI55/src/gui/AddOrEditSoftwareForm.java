@@ -37,13 +37,20 @@ public class AddOrEditSoftwareForm extends JFrame implements ActionListener {
 	private ArrayList<Render> renders;
 	private DefaultTableModel softwareTable;
 	
+	private Software softwareToEdit;
+	int softwareIndex;
+	
 	public AddOrEditSoftwareForm(ArrayList<Software> softwares, DefaultTableModel softwareTable,
-			ArrayList<Brush> brushes, ArrayList<Render> renders) {
+			ArrayList<Brush> brushes, ArrayList<Render> renders, Software softwareToEdit, int softwareIndex) {
 		
 		this.softwares = softwares; 
 		this.softwareTable = softwareTable; 
 		this.brushes = brushes;
 		this.renders = renders;
+		
+		this.softwareToEdit = softwareToEdit; 
+		this.softwareIndex = softwareIndex;
+		
 		
 		setTitle("Add Software");
 		setBounds(300, 90, 600, 600);
@@ -102,6 +109,10 @@ public class AddOrEditSoftwareForm extends JFrame implements ActionListener {
 		
 		String addButtonText = "Create Software";
 		
+		if (this.softwareToEdit != null) {
+			addButtonText = "Edit Software";
+		}
+
 		create = new JButton(addButtonText);
 		create.setSize(200, 20);
 		create.setLocation(175, 400);
@@ -114,8 +125,38 @@ public class AddOrEditSoftwareForm extends JFrame implements ActionListener {
 		cancel.addActionListener(this);
 		c.add(cancel);
 
+		
+		if (this.softwareToEdit != null) {
+			fillFieldsWithSoftwareData(this.softwareToEdit);
+		}
+		
+		
 		setVisible(true);
 	}
+	
+	
+	private void fillFieldsWithSoftwareData(Software software) {
+		this.tname.setText(software.getName());
+		this.fileFormat.setSelectedItem(software.getFileFormat());
+		int selectedRenderIndex = -1;
+		for (int i = 0; i < renders.size(); i++) {
+			if (renders.get(i) == software.getRender()) {
+				selectedRenderIndex = i;
+			}
+		}
+		this.render.setSelectedIndex(selectedRenderIndex);
+		int[] selectedBrushesIndices = new int[software.getBrushes().size()];
+		for (int i = 0; i < software.getBrushes().size(); i++) {
+			for (int j = 0; j < brushes.size(); j++) {
+				if (brushes.get(j) == software.getBrushes().get(i)) {
+					selectedBrushesIndices[i] = j;
+				}
+			}
+		}
+		this.brushesList.setSelectedIndices(selectedBrushesIndices);
+	}
+	
+	
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == create) { 
@@ -139,7 +180,11 @@ public class AddOrEditSoftwareForm extends JFrame implements ActionListener {
 	private void createOrEditSoftware() {
 		
 		Software software;
-		software = new Software();
+		if (this.softwareToEdit != null) {
+			software = this.softwareToEdit;
+		} else {
+			software = new Software();
+		}
 		
 		software.setName(this.tname.getText());
 		software.setFileFormat(FileFormat.values()[fileFormat.getSelectedIndex()]);
@@ -153,12 +198,30 @@ public class AddOrEditSoftwareForm extends JFrame implements ActionListener {
 		}
 		software.setBrushes(brushes);
 		
-		this.softwareTable.addRow(new Object[] { software.getName(), software.getFileFormat().toString(),
-				software.getRender().getName() });
+		
 
-		this.softwares.add(software);
-	}
+		if (this.softwareToEdit == null) {
+			
+			this.softwareTable.addRow(new Object[] { software.getName(), software.getFileFormat().toString(),
+					software.getRender().getName() });
+		
+			this.softwares.add(software); 
+		} else {
+			
+			this.softwareTable.removeRow(this.softwareIndex);
+			
+			this.softwareTable.addRow(new Object[] { software.getName(), software.getFileFormat().toString(),
+					software.getRender().getName() });
+			
+			this.softwares.remove(this.softwareIndex);
+			
+			this.softwares.add(software);
+		}
 	
+	}	
+		
+		
+		
 	private boolean isNameUnique(Software softwareToCheck) {
 		for (Software software : this.softwares) {
 
