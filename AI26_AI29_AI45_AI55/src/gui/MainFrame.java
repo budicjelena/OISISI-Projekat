@@ -93,7 +93,18 @@ public class MainFrame extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Add");
+				if (tabHolder.getSelectedIndex() == 1) {
+
+					//System.out.println("Add Software");
+					AddOrEditSoftwareForm addOrEditSoftwareForm = new AddOrEditSoftwareForm(softwareData.getSoftwares(),
+							softwareTab.getTableModel(), brushData.getBrushes(), renderData.getRenders(), null, 0);
+
+				} 
+				else if (tabHolder.getSelectedIndex() == 0) {
+					AddEmployeeForm addEmployeeForm = new AddEmployeeForm(softwareData.getSoftwares(),
+							employeeTab.getTableModel(), employeeData.getEmployees(), null, 0);
+					addEmployeeForm.setVisible(true);
+				}
 			}
 		});
 		
