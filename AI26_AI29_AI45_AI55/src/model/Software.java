@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import model.FileFormat;
+
 public class Software {
 	
 	private String name;
