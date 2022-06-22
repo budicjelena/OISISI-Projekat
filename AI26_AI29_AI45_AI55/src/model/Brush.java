@@ -1,5 +1,7 @@
 package model;
 
+import model.enums.Color;
+
 public class Brush {
 	
 	private String name;

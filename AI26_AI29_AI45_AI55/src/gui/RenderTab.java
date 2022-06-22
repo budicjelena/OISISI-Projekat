@@ -19,9 +19,9 @@ import javax.swing.table.DefaultTableModel;
 
 
 import data.RenderData;
-import model.Camera;
-import model.Material;
 import model.Render;
+import model.enums.Camera;
+import model.enums.Material;
 
 public class RenderTab extends JSplitPane {
 
@@ -131,7 +131,7 @@ public class RenderTab extends JSplitPane {
 
 	}
 	
-	private JScrollPane fillObjectsTable(ArrayList<model.Object> objects) {
+	private JScrollPane fillObjectsTable(ArrayList<model.enums.Object> objects) {
 		JTable jTable = new JTable();
 		String[] header = new String[] { "OBJECTS" };
 		Object[][] employees = new Object[objects.size()][header.length];

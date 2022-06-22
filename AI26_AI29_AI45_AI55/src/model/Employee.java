@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import model.WorkPlace;
+import model.enums.WorkPlace;
 
 public class Employee {
 

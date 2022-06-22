@@ -3,8 +3,8 @@ package data;
 import java.util.ArrayList;
 
 import model.Render;
-import model.Camera;
-import model.Material;
+import model.enums.Camera;
+import model.enums.Material;
 
 public class RenderData {
 
@@ -22,11 +22,11 @@ public class RenderData {
 		m2.add(Material.MAT2);
 		m2.add(Material.MAT3);
 		
-		ArrayList<model.Object> o1 = new ArrayList<>();
-		ArrayList<model.Object> o2 = new ArrayList<>();
-		o1.add(model.Object.OBJ_1);
-		o1.add(model.Object.OBJ_2);
-		o2.add(model.Object.OBJ_3);
+		ArrayList<model.enums.Object> o1 = new ArrayList<>();
+		ArrayList<model.enums.Object> o2 = new ArrayList<>();
+		o1.add(model.enums.Object.OBJ_1);
+		o1.add(model.enums.Object.OBJ_2);
+		o2.add(model.enums.Object.OBJ_3);
 
 		ArrayList<Camera> c1 = new ArrayList<>();
 		ArrayList<Camera> c2 = new ArrayList<>();

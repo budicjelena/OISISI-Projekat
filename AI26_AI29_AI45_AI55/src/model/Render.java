@@ -2,9 +2,9 @@ package model;
 
 import java.util.ArrayList;
 
-import model.Camera;
-import model.Material;
-import model.Object;
+import model.enums.Camera;
+import model.enums.Material;
+import model.enums.Object;
 
 public class Render {
 	

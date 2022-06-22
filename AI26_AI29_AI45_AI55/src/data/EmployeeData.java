@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import model.Adress;
 import model.Employee;
 import model.Software;
-import model.WorkPlace;
+import model.enums.WorkPlace;
 
 public class EmployeeData {
 

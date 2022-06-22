@@ -1,11 +1,9 @@
 package gui;
 
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -73,7 +71,7 @@ public class EmployeeTab extends JSplitPane {
 				if (e.getClickCount() == 1) {
 					JTable target = (JTable) e.getSource();
 					int row = target.getSelectedRow();
-					int column = target.getSelectedColumn();
+	
 					infoPanel.removeAll();
 					fillInfoPanel(employeeData.getEmployees().get(row));
 				}
@@ -176,17 +174,17 @@ public class EmployeeTab extends JSplitPane {
 	public void deleteEmployee() {
 		if (jTable.getSelectedRow() >= 0) { // Checking if row is selected
 			int choice = JOptionPane.showConfirmDialog(null, "Do you want to proceed?", "Warning.",
-					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);// 0 =yes , 1 =no
+					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
 			if (choice == 0) {
-				this.employeeData.removeEmployeeFromList(jTable.getSelectedRow()); // pass selected row index that
-																					// corresponds to index of list
-				tableModel.removeRow(jTable.getSelectedRow());// remove row from table
-				this.infoPanel.removeAll(); // remove info panel of deleted software
-				this.repaint(); // need this to make visual change
+				this.employeeData.removeEmployeeFromList(jTable.getSelectedRow()); 
+																					
+				tableModel.removeRow(jTable.getSelectedRow());
+				this.infoPanel.removeAll(); 
+				this.repaint(); 
 			}
 		} else {
-			// show error message if no row is selected
+		
 			JOptionPane.showMessageDialog(null, "You need to select row!", "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}

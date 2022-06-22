@@ -6,7 +6,7 @@ import javax.swing.table.DefaultTableModel;
 import model.Adress;
 import model.Employee;
 import model.Software;
-import model.WorkPlace;
+import model.enums.WorkPlace;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -21,8 +21,9 @@ public class AddEmployeeForm extends JFrame implements ActionListener {
 	private JTextField tfirstName, tlastName, temail, tjmbg, tstreet, tnumber, tcity;
 	private JComboBox date, month, year, workPlace;
 	private JList softwareList;
-	private JButton create, cancel;
+	private JButton createOrEdit, cancel;
 
+	private String validationMessage = "";
 	private ArrayList<Software> softwares;
 	private DefaultTableModel employeTable;
 	private ArrayList<Employee> employees;
@@ -49,7 +50,12 @@ public class AddEmployeeForm extends JFrame implements ActionListener {
 		this.employeeToEdit = employeeToEdit; 
 		this.employeeIndex = employeeIndex;
 		
-		setTitle("Add Employee");
+		String title = "Add Employee";
+		if (this.employeeToEdit != null) {
+			title = "Edit employee";
+		}
+		
+		setTitle(title);
 		setBounds(300, 90, 600, 850);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
@@ -170,18 +176,12 @@ public class AddEmployeeForm extends JFrame implements ActionListener {
 		sp.setLocation(150, 575);
 		c.add(sp);
 		
-		String addButtonText = "Create Employee";
 		
-		if (this.employeeToEdit != null) {
-			addButtonText = "Edit employee";
-		}
-		
-		
-		create = new JButton(addButtonText);
-		create.setSize(200, 20);
-		create.setLocation(175, 700);
-		create.addActionListener(this);
-		c.add(create);
+		createOrEdit = new JButton("OK");
+		createOrEdit.setSize(200, 20);
+		createOrEdit.setLocation(175, 700);
+		createOrEdit.addActionListener(this);
+		c.add(createOrEdit);
 
 		cancel = new JButton("Cancel");
 		cancel.setSize(200, 20);
@@ -220,17 +220,9 @@ public class AddEmployeeForm extends JFrame implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == create) { 
+		if (e.getSource() == createOrEdit) { 
 			
-			try {
-				createOrEditEmployee();
-				setVisible(false); 
-				dispose(); 
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				JOptionPane.showMessageDialog(null, "Popunite sva polja ispravno", "Neispravni podaci",
-						JOptionPane.WARNING_MESSAGE);
-			}
+			validateFields();
 		}
 		
 		if(e.getSource() == cancel) {
@@ -277,6 +269,14 @@ public class AddEmployeeForm extends JFrame implements ActionListener {
 		}
 		employee.setSoftwares(softwares);
 		
+		if (!isJmbgUnique(employee)) {
+			this.validationMessage = "Employee with that JMBG already exists !";
+			JOptionPane.showMessageDialog(null, this.validationMessage, "Invalid data", JOptionPane.WARNING_MESSAGE);
+			this.validationMessage = "";
+			return;
+
+		}
+		
 		if (this.employeeToEdit == null) {
 			
 			this.employeTable.addRow(new Object[] { employee.getFirstName(), employee.getLastName(),
@@ -295,6 +295,37 @@ public class AddEmployeeForm extends JFrame implements ActionListener {
 			this.employees.add(employee);
 		}
 		
+		setVisible(false); 
+		dispose(); 
+		
+	}
+	
+	private void validateFields() {
+		// check if fields are empty
+		if (tfirstName.getText().trim().isEmpty())
+			this.validationMessage = this.validationMessage + "You must enter first name ! \r\n";
+		if (tlastName.getText().trim().isEmpty())
+			this.validationMessage = this.validationMessage + "You must enter last name ! \r\n";
+		if (tjmbg.getText().trim().isEmpty())
+			this.validationMessage = this.validationMessage + "You must enter JMBG ! \r\n";
+		if (!isJmbgNumber())
+			this.validationMessage = this.validationMessage + "JMBG must be a number ! \r\n";
+		if (tstreet.getText().trim().isEmpty())
+			this.validationMessage = this.validationMessage + "You must enter street Name ! \r\n";
+		if (tnumber.getText().trim().isEmpty())
+			this.validationMessage = this.validationMessage + "You must enter street number ! \r\n";
+		if (tcity.getText().trim().isEmpty())
+			this.validationMessage = this.validationMessage + "You must enter city Name ! \r\n";
+		if (softwareList.getSelectedIndices().length < 1)
+			this.validationMessage = this.validationMessage + "You must choose at least 1 software for employee ! \r\n";
+		if (this.validationMessage != "") { // check if we have any text in validationMessage and show errors if that is
+											// the case
+			JOptionPane.showMessageDialog(null, this.validationMessage, "Neispravni podaci",
+					JOptionPane.WARNING_MESSAGE);
+		} else {
+			createOrEditEmployee();
+		}
+		this.validationMessage = ""; // reset for next try
 	}
 	
 	private boolean isJmbgUnique(Employee employeeToCheck) {
@@ -305,6 +336,15 @@ public class AddEmployeeForm extends JFrame implements ActionListener {
 			}
 		}
 		return true;
+	}
+	
+	private boolean isJmbgNumber() {
+		try {
+			int jmbg = Integer.parseInt(tjmbg.getText());
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	

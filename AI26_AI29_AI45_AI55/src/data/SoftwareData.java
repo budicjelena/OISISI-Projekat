@@ -3,9 +3,9 @@ package data;
 import java.util.ArrayList;
 
 import model.Brush;
-import model.FileFormat;
 import model.Render;
 import model.Software;
+import model.enums.FileFormat;
 
 public class SoftwareData {
 

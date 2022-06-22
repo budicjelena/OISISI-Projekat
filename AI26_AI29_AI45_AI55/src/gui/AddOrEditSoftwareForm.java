@@ -18,9 +18,9 @@ import javax.swing.table.DefaultTableModel;
 
 import model.Brush;
 import model.Employee;
-import model.FileFormat;
 import model.Render;
 import model.Software;
+import model.enums.FileFormat;
 
 public class AddOrEditSoftwareForm extends JFrame implements ActionListener {
 	
@@ -36,6 +36,7 @@ public class AddOrEditSoftwareForm extends JFrame implements ActionListener {
 	private ArrayList<Brush> brushes;
 	private ArrayList<Render> renders;
 	private DefaultTableModel softwareTable;
+	private String validationMessage = "";
 	
 	private Software softwareToEdit;
 	int softwareIndex;
@@ -51,8 +52,12 @@ public class AddOrEditSoftwareForm extends JFrame implements ActionListener {
 		this.softwareToEdit = softwareToEdit; 
 		this.softwareIndex = softwareIndex;
 		
+		String title = "Add Software";
+		if (this.softwareToEdit != null) {
+			title = "Edit Software";
+		}
 		
-		setTitle("Add Software");
+		setTitle(title);
 		setBounds(300, 90, 600, 600);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
@@ -107,13 +112,7 @@ public class AddOrEditSoftwareForm extends JFrame implements ActionListener {
 		sp.setLocation(100, 275);
 		c.add(sp);
 		
-		String addButtonText = "Create Software";
-		
-		if (this.softwareToEdit != null) {
-			addButtonText = "Edit Software";
-		}
-
-		create = new JButton(addButtonText);
+		create = new JButton("OK");
 		create.setSize(200, 20);
 		create.setLocation(175, 400);
 		create.addActionListener(this);
@@ -160,15 +159,7 @@ public class AddOrEditSoftwareForm extends JFrame implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == create) { 
-			try {
-				createOrEditSoftware();
-				setVisible(false); 
-				dispose(); 
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				JOptionPane.showMessageDialog(null, "Popunite sva polja ispravno", "Neispravni podaci",
-						JOptionPane.WARNING_MESSAGE);
-			}
+			validateFields();
 		}
 
 		if (e.getSource() == cancel) {
@@ -198,7 +189,13 @@ public class AddOrEditSoftwareForm extends JFrame implements ActionListener {
 		}
 		software.setBrushes(brushes);
 		
-		
+		if (!isNameUnique(software)) {
+			this.validationMessage = "Software with that name already exists !";
+			JOptionPane.showMessageDialog(null, this.validationMessage, "Invalid data",
+					JOptionPane.WARNING_MESSAGE);
+			this.validationMessage = "";
+			return;
+		}
 
 		if (this.softwareToEdit == null) {
 			
@@ -217,15 +214,32 @@ public class AddOrEditSoftwareForm extends JFrame implements ActionListener {
 			
 			this.softwares.add(software);
 		}
+		
+		setVisible(false);
+		dispose();
 	
 	}	
+	
+	private void validateFields() {
+		
+		if (tname.getText().trim().isEmpty())
+			this.validationMessage = this.validationMessage + "You must enter name ! \r\n";
+		if (this.validationMessage != "") { 
+											
+			JOptionPane.showMessageDialog(null, this.validationMessage, "Invalid data",
+					JOptionPane.WARNING_MESSAGE);
+		} else {
+			createOrEditSoftware();
+		}
+		this.validationMessage = ""; 
+	}
 		
 		
 		
 	private boolean isNameUnique(Software softwareToCheck) {
 		for (Software software : this.softwares) {
 
-			if (software != softwareToCheck && software.getName() == softwareToCheck.getName()) {
+			if (software != softwareToCheck && software.getName().equals(softwareToCheck.getName())) {
 				return false;
 			}
 		}

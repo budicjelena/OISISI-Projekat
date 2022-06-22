@@ -3,7 +3,7 @@ package data;
 import java.util.ArrayList;
 
 import model.Brush;
-import model.Color;
+import model.enums.Color;
 
 public class BrushData {
 	

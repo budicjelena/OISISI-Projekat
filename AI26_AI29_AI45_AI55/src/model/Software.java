@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-import model.FileFormat;
+import model.enums.FileFormat;
 
 public class Software {
 	
