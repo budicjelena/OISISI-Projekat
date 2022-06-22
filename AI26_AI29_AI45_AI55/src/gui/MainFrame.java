@@ -373,7 +373,7 @@ public class MainFrame extends JFrame{
 		this.employeeTab = new EmployeeTab(this.employeeData);
 		this.tabHolder.add("Employees", employeeTab);
 
-		this.softwareTab = new SoftwareTab(this.softwareData);
+		this.softwareTab = new SoftwareTab(this.softwareData, this.employeeData);
 		this.tabHolder.add("Software", softwareTab);
 
 		this.brushTab = new BrushTab(this.brushData);
